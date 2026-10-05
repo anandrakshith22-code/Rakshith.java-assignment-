@@ -1,0 +1,19 @@
+{
+  "name": "supermarket-billing-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c green,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "db:generate": "npm run prisma:generate -w server",
+    "db:migrate": "npm run prisma:migrate -w server",
+    "db:seed": "npm run prisma:seed -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

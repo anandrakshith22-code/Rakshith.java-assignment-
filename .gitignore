@@ -1,0 +1,9 @@
+node_modules/
+client/dist/
+server/dist/
+.pgdata/
+.vscode/
+.env
+.env.*
+!.env.example
+npm-debug.log*

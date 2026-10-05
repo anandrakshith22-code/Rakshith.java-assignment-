@@ -1,47 +1,43 @@
-## Java assignments
+# Supermarket Billing System
 
-Each Java file is a standalone example for one assignment. The filename matches
-its public class, so the examples can also be compiled together with `javac *.java`.
+A modular POS starter with a React + Tailwind cashier interface, Express REST API, and PostgreSQL database managed by Prisma.
 
-| # | Topic | File |
-|---|---|---|
-| 1 | Print the populations of India and China | `PopulationTracker.java` |
-| 2 | Calculate a circle's area | `CircleArea.java` |
-| 3 | Assign a grade and check the 70-mark pass threshold | `StudentGrade.java` |
-| 4 | Build a simple calculator | `SimpleCalculator.java` |
-| 5 | Find an array's sum and average | `ArraySumAverage.java` |
-| 6 | Sum each row of a matrix | `MatrixRowSum.java` |
-| 7 | Demonstrate three String methods | `StringMethodsDemo.java` |
-| 8 | Split a sentence and rebuild it in a new format | `SentenceSplitter.java` |
-| 9 | Generate Fibonacci numbers recursively | `Fibonacci.java` |
-| 10 | Implement selection sort and insertion sort | `SortingAlgorithms.java` |
-| 11 | Count vowels in a string | `VowelCounter.java` |
-| 12 | Reverse an array in place | `ReverseArrayInPlace.java` |
-| 13 | Find the second-largest distinct array value | `SecondLargestInArray.java` |
-| 14 | Demonstrate an Animal/Dog/Rabbit class hierarchy | `AnimalHierarchy.java` |
-| 15 | Override `toString()` and print an object | `ToStringOverrideDemo.java` |
-| 16 | Demonstrate shape abstraction with two subclasses | `ShapeAbstraction.java` |
-| 17 | Add, remove, and iterate through ArrayList tasks | `TodoListManager.java` |
-| 18 | Access and remove LinkedList elements | `LinkedListDemo.java` |
-| 19 | Handle arithmetic and array-index exceptions | `ExceptionHandlingDemo.java` |
-| 20 | Find the largest array value | `FindLargestInArray.java` |
-| 21 | Share a student class between two objects | `StudentDetailsDemo.java` |
-| 22 | Count distinct absolute values | `DistinctAbsoluteValues.java` |
-| 23 | Find two indices whose values sum to a target | `TwoSum.java` |
-| 24 | Count anagram groups | `AnagramGroups.java` |
-| 25 | Create and populate a students table | `StudentsTable.sql` |
+## Requirements
 
-### Run the Java examples
+- Node.js 20+
+- PostgreSQL 14+
 
-Install a JDK, then run these commands from the repository root:
+## Getting started
 
-```sh
-javac *.java
-java PopulationTracker
+1. Copy `server/.env.example` to `server/.env` and set `DATABASE_URL`.
+2. Install dependencies with `npm install`.
+3. Generate Prisma Client and apply the schema: `npm run db:generate` then `npm run db:migrate`.
+4. Optionally load demo products: `npm run db:seed`.
+5. Start the API and web app with `npm run dev`.
+
+The Vite app is served at `http://localhost:5173`; the API listens on `http://localhost:4000`. Product search is available at `GET /api/v1/products?search=...`; checkout is `POST /api/v1/bills/checkout`.
+
+## Deploying the frontend to Netlify
+
+The repository includes `netlify.toml` for building and serving the client as a single-page app. Netlify can host the frontend, but the Express API and PostgreSQL database must also be deployed to publicly reachable services for product search and checkout to work.
+
+1. Deploy the API and database, then configure the API's `DATABASE_URL`, `PORT`, and `CLIENT_ORIGIN` environment variables. Set `CLIENT_ORIGIN` to your Netlify site URL.
+2. Import the repository into Netlify; it will use the build settings in `netlify.toml`.
+3. In the Netlify site environment variables, set `VITE_API_URL` to the API origin (for example, `https://your-api.example.com`, without `/api/v1`), then trigger a new deploy.
+
+When `VITE_API_URL` is unset, the client uses relative API paths, which work with the Vite development proxy locally.
+
+## Checkout contract
+
+```json
+{
+  "items": [{ "productId": "product-uuid", "quantity": 2 }],
+  "paymentMethod": "CASH",
+  "customerId": null,
+  "couponCode": "OFF10"
+}
 ```
 
-Replace `PopulationTracker` with the class you want to run. Run the SQL script
-with a database client that supports the SQL dialect of your database.
+Prices are stored and submitted from the database, never trusted from the client. Product prices are GST-exclusive; checkout applies each product's GST rate, splits GST evenly into CGST and SGST, then applies any valid item discount and bill coupon. The transaction locks inventory rows in a stable order, verifies every requested quantity, decrements stock, and creates the bill and its item snapshots atomically.
 
-The repository also contains additional examples: `Main.java`,
-`ExceptionDemo.java`, and `ExceptionHandlingDemo.java`. and insert any three records into the table
+Coupon codes in the `OFF<number>` format apply that percentage off the eligible subtotal (for example, `OFF10` gives 10% off), capped at ₹500. Percentages must be between 1 and 100. The legacy `SAVE10` code remains accepted as an alias for `OFF10`. Replace the demo coupon catalog and add staff authentication/authorization before production deployment.
