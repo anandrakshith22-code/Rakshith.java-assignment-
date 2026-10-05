@@ -1,25 +1,47 @@
-1.write a java code to store the population of india and china and print the population
-2.write a java code to calculate the area of circle
-3.write a java code to assign grade A for the student who have the marks above 90 check if a student has passed the exam or not(pass marksis 70)
-4.java code for simple calculator
-5.find the sum and average of the array in java
-6.java code for adding rows in matrix
-7.write a code by using 3 methods of string in java
-8.write  a java code by spliting a sentence  into word and then rebuilt it in new format
-9.java code for fibonacci with recursion
-10.write java code for selection sort and insertion sort
-11.java code for counting vowels in string
-12.java code for reversing an array in place
-13.java code for 2nd largest element
-14.write a java code to create hierarchy with class animal subclass dog,forrabbit
-15.write java code for method overidding a string where each class inherts to string from object and overiddibg that to see how the object can be printed
-16.write a java code to implement the abraction by using shapes and 2 sub classes which can have the fuctionality in different ways
-17.java code for managing a To Do list adding removing and iterating over a simple arraylist of tasks
-18.java code for accessing and removing elements in a linkedlist by using its operations
-19.write a java code by using try,catch,finally,block for any arthimetic exception or array index out of bound exception
-20.java code for finding the largest element in an array
-21.java code for create a class which can shared by two objects(student) for name and marks in a subject
-22.given an array of integers return the number of distinct absolute values among the elements of the array absolute of any value is defined as its positive equivalent ABS(-5)=505 MATHEMATICALLY |-5|=|5|=1
-23.GIVEN AN ARRAY OF INTEGERS AND AN INTEGER TARGET PRINT INDIES OF THE TWO numbers such thst the numbers add up to target you may assume that each input would have exactly one solution and you may not the use elemnt tewce you must print the answer indices in ascending order ifno such pair exits return [-1,1]
-24.java code for you are given N string of length M count the number of anagramic groups .
-25.Write a SQL queue for creating a students table which has roll no,name,age,date of birth,email ID,phone number and address and the primary keys are students ID,name,email ID and phone number should not be null and insert any three records into the table
+## Java assignments
+
+Each Java file is a standalone example for one assignment. The filename matches
+its public class, so the examples can also be compiled together with `javac *.java`.
+
+| # | Topic | File |
+|---|---|---|
+| 1 | Print the populations of India and China | `PopulationTracker.java` |
+| 2 | Calculate a circle's area | `CircleArea.java` |
+| 3 | Assign a grade and check the 70-mark pass threshold | `StudentGrade.java` |
+| 4 | Build a simple calculator | `SimpleCalculator.java` |
+| 5 | Find an array's sum and average | `ArraySumAverage.java` |
+| 6 | Sum each row of a matrix | `MatrixRowSum.java` |
+| 7 | Demonstrate three String methods | `StringMethodsDemo.java` |
+| 8 | Split a sentence and rebuild it in a new format | `SentenceSplitter.java` |
+| 9 | Generate Fibonacci numbers recursively | `Fibonacci.java` |
+| 10 | Implement selection sort and insertion sort | `SortingAlgorithms.java` |
+| 11 | Count vowels in a string | `VowelCounter.java` |
+| 12 | Reverse an array in place | `ReverseArrayInPlace.java` |
+| 13 | Find the second-largest distinct array value | `SecondLargestInArray.java` |
+| 14 | Demonstrate an Animal/Dog/Rabbit class hierarchy | `AnimalHierarchy.java` |
+| 15 | Override `toString()` and print an object | `ToStringOverrideDemo.java` |
+| 16 | Demonstrate shape abstraction with two subclasses | `ShapeAbstraction.java` |
+| 17 | Add, remove, and iterate through ArrayList tasks | `TodoListManager.java` |
+| 18 | Access and remove LinkedList elements | `LinkedListDemo.java` |
+| 19 | Handle arithmetic and array-index exceptions | `ExceptionHandlingDemo.java` |
+| 20 | Find the largest array value | `FindLargestInArray.java` |
+| 21 | Share a student class between two objects | `StudentDetailsDemo.java` |
+| 22 | Count distinct absolute values | `DistinctAbsoluteValues.java` |
+| 23 | Find two indices whose values sum to a target | `TwoSum.java` |
+| 24 | Count anagram groups | `AnagramGroups.java` |
+| 25 | Create and populate a students table | `StudentsTable.sql` |
+
+### Run the Java examples
+
+Install a JDK, then run these commands from the repository root:
+
+```sh
+javac *.java
+java PopulationTracker
+```
+
+Replace `PopulationTracker` with the class you want to run. Run the SQL script
+with a database client that supports the SQL dialect of your database.
+
+The repository also contains additional examples: `Main.java`,
+`ExceptionDemo.java`, and `ExceptionHandlingDemo.java`. and insert any three records into the table

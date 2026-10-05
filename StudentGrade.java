@@ -12,7 +12,7 @@ public class StudentGrade {
             System.out.println("Grade: B or lower");
         }
 
-        if (marks >= 40) {
+        if (marks >= 70) {
             System.out.println("Status: Passed");
         } else {
             System.out.println("Status: Failed");
