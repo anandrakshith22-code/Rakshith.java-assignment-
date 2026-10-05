@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  UPI
+}
+
+enum BillStatus {
+  COMPLETED
+  VOIDED
+}
+
+model Product {
+  id             String      @id @default(uuid()) @db.Uuid
+  barcode        String      @unique
+  name           String
+  description    String?
+  category       String      @default("General")
+  hsnCode        String
+  price          Decimal     @db.Decimal(12, 2)
+  gstRate        Decimal     @db.Decimal(5, 2)
+  discountRate   Decimal     @default(0) @db.Decimal(5, 2)
+  isActive       Boolean     @default(true)
+  inventory      Inventory?
+  billItems      BillItem[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([name])
+  @@index([category])
+}
+
+model Inventory {
+  id        String   @id @default(uuid()) @db.Uuid
+  productId String   @unique @db.Uuid
+  quantity  Int      @default(0)
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([quantity])
+}
+
+model Customer {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  phone     String   @unique
+  email     String?  @unique
+  bills     Bill[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bill {
+  id             String        @id @default(uuid()) @db.Uuid
+  invoiceNumber  String        @unique
+  customerId     String?       @db.Uuid
+  paymentMethod  PaymentMethod
+  status         BillStatus    @default(COMPLETED)
+  subtotal       Decimal       @db.Decimal(12, 2)
+  itemDiscount   Decimal       @default(0) @db.Decimal(12, 2)
+  couponDiscount Decimal       @default(0) @db.Decimal(12, 2)
+  cgst           Decimal       @db.Decimal(12, 2)
+  sgst           Decimal       @db.Decimal(12, 2)
+  taxTotal       Decimal       @db.Decimal(12, 2)
+  total          Decimal       @db.Decimal(12, 2)
+  couponCode     String?
+  customer       Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  items          BillItem[]
+  createdAt      DateTime      @default(now())
+
+  @@index([createdAt])
+  @@index([customerId, createdAt])
+}
+
+model BillItem {
+  id           String   @id @default(uuid()) @db.Uuid
+  billId       String   @db.Uuid
+  productId    String   @db.Uuid
+  productName  String
+  barcode      String
+  hsnCode      String
+  quantity     Int
+  unitPrice    Decimal  @db.Decimal(12, 2)
+  discountRate Decimal  @db.Decimal(5, 2)
+  discount     Decimal  @db.Decimal(12, 2)
+  gstRate      Decimal  @db.Decimal(5, 2)
+  taxableValue Decimal  @db.Decimal(12, 2)
+  cgst         Decimal  @db.Decimal(12, 2)
+  sgst         Decimal  @db.Decimal(12, 2)
+  total        Decimal  @db.Decimal(12, 2)
+  bill         Bill     @relation(fields: [billId], references: [id], onDelete: Cascade)
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([billId])
+  @@index([productId])
+}

@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #18231e;
+  background: #f5f7f4;
+}
+
+h1, h2, .font-bold {
+  font-family: "Manrope", "DM Sans", ui-sans-serif, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 360px; min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+@media print {
+  @page { size: 80mm auto; margin: 3mm; }
+  body { min-width: 0; background: #fff; color: #000; }
+  body * { visibility: hidden !important; }
+  .receipt, .receipt * { visibility: visible !important; }
+  .receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 74mm;
+    max-width: 74mm;
+    color: #000 !important;
+    font-family: "Courier New", monospace;
+  }
+  .no-print { display: none !important; }
+}
